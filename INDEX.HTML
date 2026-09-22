@@ -1,0 +1,1119 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Sender CRM</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f9;
+    color: #222;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 230px;
+    height: 100vh;
+    background: #18212f;
+    color: white;
+    padding: 25px 15px;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo h2 {
+    font-size: 21px;
+}
+
+.logo span {
+    color: #4da3ff;
+    font-size: 13px;
+}
+
+.nav button {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.nav button:hover,
+.nav button.active {
+    background: #2676d9;
+}
+
+/* Main */
+.main {
+    margin-left: 230px;
+    padding: 25px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    font-size: 28px;
+}
+
+.header p {
+    color: #777;
+    margin-top: 5px;
+}
+
+.add-btn {
+    background: #2676d9;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.add-btn:hover {
+    background: #195fae;
+}
+
+/* Cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.card-title {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.card-value {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+/* Sections */
+.section {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+.box {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.box-header h2 {
+    font-size: 20px;
+}
+
+/* Search */
+.search {
+    width: 300px;
+    padding: 11px 13px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    outline: none;
+}
+
+.search:focus {
+    border-color: #2676d9;
+}
+
+/* Table */
+.table-wrapper {
+    overflow-x: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1000px;
+}
+
+th {
+    background: #18212f;
+    color: white;
+    padding: 13px 10px;
+    text-align: left;
+    font-size: 13px;
+}
+
+td {
+    padding: 13px 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+}
+
+tr:hover td {
+    background: #f8fbff;
+}
+
+/* Status */
+.status {
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.completed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Buttons */
+.edit-btn,
+.delete-btn {
+    border: none;
+    padding: 6px 9px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+.edit-btn {
+    background: #e7f1ff;
+    color: #1769aa;
+}
+
+.delete-btn {
+    background: #ffe5e5;
+    color: #c62828;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: white;
+    width: 600px;
+    max-width: 95%;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.modal-header p {
+    color: #777;
+    margin-top: 5px;
+}
+
+.close {
+    border: none;
+    background: none;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #2676d9;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.cancel-btn,
+.save-btn {
+    padding: 11px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: #ddd;
+}
+
+.save-btn {
+    background: #2676d9;
+    color: white;
+}
+
+/* Responsive */
+@media(max-width: 900px) {
+
+    .sidebar {
+        width: 180px;
+    }
+
+    .main {
+        margin-left: 180px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 600px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+
+    <div class="logo">
+        <h2>Project Sender</h2>
+        <span>CRM SYSTEM</span>
+    </div>
+
+    <div class="nav">
+
+        <button class="active" onclick="showDashboard()">
+            🏠 Dashboard
+        </button>
+
+        <button onclick="showCustomers()">
+            👥 Customers
+        </button>
+
+        <button onclick="openModal()">
+            ➕ Add Customer
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+<div class="main">
+
+    <div class="header">
+
+        <div>
+            <h1 id="pageTitle">Dashboard</h1>
+            <p>Customer management system</p>
+        </div>
+
+        <button class="add-btn" onclick="openModal()">
+            + Add Customer
+        </button>
+
+    </div>
+
+
+    <!-- DASHBOARD -->
+    <div id="dashboardSection" class="section">
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="card-title">Total Customers</div>
+                <div class="card-value" id="customerCount">0</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Total Project Value</div>
+                <div class="card-value" id="totalValue">₹0</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Total Advance</div>
+                <div class="card-value" id="totalAdvance">₹0</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Total Balance</div>
+                <div class="card-value" id="totalBalance">₹0</div>
+            </div>
+
+        </div>
+
+
+        <div class="box">
+
+            <div class="box-header">
+                <h2>Recent Customers</h2>
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Project</th>
+                            <th>Total</th>
+                            <th>Balance</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="recentTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CUSTOMERS -->
+    <div id="customerSection" class="section hidden">
+
+        <div class="box">
+
+            <div class="box-header">
+
+                <h2>All Customers</h2>
+
+                <input
+                    class="search"
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search customer..."
+                    onkeyup="searchCustomers()"
+                >
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Area</th>
+                            <th>Project</th>
+                            <th>Advance</th>
+                            <th>Total</th>
+                            <th>Balance</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="customerTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL -->
+<div class="modal" id="customerModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <div>
+                <h2 id="modalTitle">Add Customer</h2>
+                <p>Enter customer information</p>
+            </div>
+
+            <button class="close" onclick="closeModal()">×</button>
+
+        </div>
+
+
+        <form id="customerForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Name</label>
+                    <input id="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input id="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Area</label>
+                    <input id="area" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Project</label>
+                    <input id="project" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Advance</label>
+                    <input id="advance" type="number" value="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Total</label>
+                    <input id="total" type="number" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Balance</label>
+                    <input id="balance" type="number" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+
+                    <select id="status">
+
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Date</label>
+                    <input id="date" type="date" required>
+                </div>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    onclick="closeModal()">
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="save-btn">
+                    Save Customer
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let customers = [];
+let editIndex = -1;
+
+
+/* LOAD CUSTOMERS */
+
+async function loadCustomers() {
+
+    try {
+
+        const response = await fetch("/customers");
+
+        customers = await response.json();
+
+        updateDashboard();
+        displayCustomers();
+
+    } catch(error) {
+
+        alert("Unable to connect to CRM server.");
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* DASHBOARD */
+
+function updateDashboard() {
+
+    document.getElementById("customerCount").textContent =
+        customers.length;
+
+    let total = 0;
+    let advance = 0;
+    let balance = 0;
+
+    customers.forEach(customer => {
+
+        total += Number(customer.total) || 0;
+        advance += Number(customer.advance) || 0;
+        balance += Number(customer.balance) || 0;
+
+    });
+
+    document.getElementById("totalValue").textContent =
+        "₹" + total.toLocaleString("en-IN");
+
+    document.getElementById("totalAdvance").textContent =
+        "₹" + advance.toLocaleString("en-IN");
+
+    document.getElementById("totalBalance").textContent =
+        "₹" + balance.toLocaleString("en-IN");
+
+
+    const recent = customers.slice(-5).reverse();
+
+    const table = document.getElementById("recentTable");
+
+    table.innerHTML = "";
+
+    recent.forEach((customer, index) => {
+
+        const realIndex = customers.indexOf(customer);
+
+        table.innerHTML += `
+
+        <tr>
+
+            <td>${realIndex + 1}</td>
+
+            <td><strong>${escapeHTML(customer.name)}</strong></td>
+
+            <td>${escapeHTML(customer.phone)}</td>
+
+            <td>${escapeHTML(customer.project)}</td>
+
+            <td>₹${Number(customer.total || 0).toLocaleString("en-IN")}</td>
+
+            <td>₹${Number(customer.balance || 0).toLocaleString("en-IN")}</td>
+
+            <td>
+                ${statusHTML(customer.status)}
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+
+/* CUSTOMER TABLE */
+
+function displayCustomers(list = customers) {
+
+    const table = document.getElementById("customerTable");
+
+    table.innerHTML = "";
+
+    list.forEach((customer) => {
+
+        const index = customers.indexOf(customer);
+
+        table.innerHTML += `
+
+        <tr>
+
+            <td>${index + 1}</td>
+
+            <td><strong>${escapeHTML(customer.name)}</strong></td>
+
+            <td>${escapeHTML(customer.phone)}</td>
+
+            <td>${escapeHTML(customer.area)}</td>
+
+            <td>${escapeHTML(customer.project)}</td>
+
+            <td>₹${Number(customer.advance || 0).toLocaleString("en-IN")}</td>
+
+            <td>₹${Number(customer.total || 0).toLocaleString("en-IN")}</td>
+
+            <td>₹${Number(customer.balance || 0).toLocaleString("en-IN")}</td>
+
+            <td>${statusHTML(customer.status)}</td>
+
+            <td>${escapeHTML(customer.date)}</td>
+
+            <td>
+
+                <button
+                    class="edit-btn"
+                    onclick="editCustomer(${index})">
+                    Edit
+                </button>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteCustomer(${index})">
+                    Delete
+                </button>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+
+/* STATUS */
+
+function statusHTML(status) {
+
+    let className = "pending";
+
+    if (status === "Completed") {
+        className = "completed";
+    }
+
+    if (status === "Cancelled") {
+        className = "cancelled";
+    }
+
+    return `<span class="status ${className}">
+        ${escapeHTML(status || "Pending")}
+    </span>`;
+
+}
+
+
+/* SEARCH */
+
+function searchCustomers() {
+
+    const value =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const filtered = customers.filter(customer =>
+
+        Object.values(customer).some(item =>
+            String(item)
+            .toLowerCase()
+            .includes(value)
+        )
+
+    );
+
+    displayCustomers(filtered);
+
+}
+
+
+/* OPEN MODAL */
+
+function openModal() {
+
+    editIndex = -1;
+
+    document.getElementById("modalTitle").textContent =
+        "Add Customer";
+
+    document.getElementById("customerForm").reset();
+
+    document.getElementById("advance").value = 0;
+
+    document.getElementById("balance").value = "";
+
+    document.getElementById("customerModal").style.display =
+        "flex";
+
+}
+
+
+/* EDIT CUSTOMER */
+
+function editCustomer(index) {
+
+    const customer = customers[index];
+
+    editIndex = index;
+
+    document.getElementById("modalTitle").textContent =
+        "Edit Customer";
+
+    document.getElementById("name").value =
+        customer.name || "";
+
+    document.getElementById("phone").value =
+        customer.phone || "";
+
+    document.getElementById("area").value =
+        customer.area || "";
+
+    document.getElementById("project").value =
+        customer.project || "";
+
+    document.getElementById("advance").value =
+        customer.advance || 0;
+
+    document.getElementById("total").value =
+        customer.total || 0;
+
+    document.getElementById("balance").value =
+        customer.balance || 0;
+
+    document.getElementById("status").value =
+        customer.status || "Pending";
+
+    document.getElementById("date").value =
+        customer.date || "";
+
+    document.getElementById("customerModal").style.display =
+        "flex";
+
+}
+
+
+/* CLOSE MODAL */
+
+function closeModal() {
+
+    document.getElementById("customerModal").style.display =
+        "none";
+
+}
+
+
+/* AUTO CALCULATE BALANCE */
+
+document.getElementById("advance").addEventListener("input", calculateBalance);
+
+document.getElementById("total").addEventListener("input", calculateBalance);
+
+
+function calculateBalance() {
+
+    const total =
+        Number(document.getElementById("total").value) || 0;
+
+    const advance =
+        Number(document.getElementById("advance").value) || 0;
+
+    document.getElementById("balance").value =
+        total - advance;
+
+}
+
+
+/* SAVE CUSTOMER */
+
+document.getElementById("customerForm").addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        const customer = {
+
+            name: document.getElementById("name").value,
+
+            phone: document.getElementById("phone").value,
+
+            area: document.getElementById("area").value,
+
+            project: document.getElementById("project").value,
+
+            advance: document.getElementById("advance").value,
+
+            total: document.getElementById("total").value,
+
+            balance: document.getElementById("balance").value,
+
+            status: document.getElementById("status").value,
+
+            date: document.getElementById("date").value
+
+        };
+
+
+        try {
+
+            if (editIndex === -1) {
+
+                await fetch("/customers", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(customer)
+
+                });
+
+                alert("Customer added successfully.");
+
+            } else {
+
+                await fetch("/customers/" + editIndex, {
+
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(customer)
+
+                });
+
+                alert("Customer updated successfully.");
+
+            }
+
+
+            closeModal();
+
+            await loadCustomers();
+
+        } catch(error) {
+
+            alert("Operation failed.");
+
+            console.error(error);
+
+        }
+
+    }
+);
+
+
+/* DELETE */
+
+async function deleteCustomer(index) {
+
+    const customer = customers[index];
+
+    const confirmDelete =
+        confirm(
+            "Delete customer " +
+            customer.name +
+            "?"
+        );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+
+    try {
+
+        await fetch("/customers/" + index, {
+
+            method: "DELETE"
+
+        });
+
+        alert("Customer deleted.");
+
+        await loadCustomers();
+
+    } catch(error) {
+
+        alert("Delete failed.");
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* NAVIGATION */
+
+function showDashboard() {
+
+    document.getElementById("dashboardSection")
+        .classList.remove("hidden");
+
+    document.getElementById("customerSection")
+        .classList.add("hidden");
+
+    document.getElementById("pageTitle")
+        .textContent = "Dashboard";
+
+}
+
+
+function showCustomers() {
+
+    document.getElementById("dashboardSection")
+        .classList.add("hidden");
+
+    document.getElementById("customerSection")
+        .classList.remove("hidden");
+
+    document.getElementById("pageTitle")
+        .textContent = "Customers";
+
+    displayCustomers();
+
+}
+
+
+/* SECURITY */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* START */
+
+loadCustomers();
+
+</script>
+
+</body>
+</html>
+```
